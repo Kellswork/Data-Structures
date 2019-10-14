@@ -2,6 +2,7 @@ import sys
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
+# first in first out
 
 class Queue:
     def __init__(self):
