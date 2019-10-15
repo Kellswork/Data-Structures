@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
@@ -19,7 +20,12 @@ class Stack:
         self.size += 1
 
     def pop(self):
-
+        # check if the size is greater than 0
+        if self.size > 0:
+            # decrement the size of the counter
+            self.size -= 1
+            # remove head of DLL and return it
+            return self.storage.remove_from_head()
 
     def len(self):
         return self.size
