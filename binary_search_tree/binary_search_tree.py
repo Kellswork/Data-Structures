@@ -17,7 +17,7 @@ class BinarySearchTree:
             return
         if value > self.value:
 
-        # if the value is greater than the root value assign it to right
+         # if the value is greater than the root value assign it to right
         # if value is less than the lower value, assign it to the left
         # it's recursive so you would have to call the function on the left and right
 
