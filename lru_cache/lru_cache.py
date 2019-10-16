@@ -1,6 +1,6 @@
-import sys
-
-sys.path.append('../doubly_linked_list')
+# import sys
+#
+# sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
 
@@ -15,9 +15,9 @@ class LRUCache:
 
     def __init__(self, limit=10):
         self.limit = limit
-        self.storage = DoublyLinkedList()
+        self.size = 0
+        self.order = DoublyLinkedList()
         self.dict_storage = {}
-        self.current_number = 0
 
     """
     Retrieves the value associated with the given key. Also
@@ -29,11 +29,11 @@ class LRUCache:
 
     def get(self, key):
         if key not in self.dict_storage:
-            return
+            return None
         else:
-            value = self.dict_storage[key]
-            self.storage.move_to_end(value)
-        return value
+            node = self.dict_storage[key]
+            self.order.move_to_end(node)
+            return node.value[1]
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -47,15 +47,20 @@ class LRUCache:
     """
 
     def set(self, key, value):
-        node = {key: value}
-        for storage_key in self.dict_storage.keys():
-            if storage_key == key:
-                self.dict_storage[key] = value
-        if self.limit < self.limit:
-            self.dict_storage.update(node)
-            self.storage.move_to_end(node)
-        if self.limit >= self.limit:
-            self.storage.remove_from_head()
-            self.dict_storage.update(node)
-            self.storage.move_to_end(node)
+        # if key exists in the storage, replace the value with the new one
+        # if the cache is full, delete the last from head and decrement the size
+        # add key value pair to the dict and increment the size
+        if key in self.dict_storage:
+            node = self.dict_storage[key]
+            node.value = (key, value)
+            self.order.move_to_end(node)
+            return
 
+        if self.size == self.limit:
+            del self.dict_storage[self.order.head.value[0]]
+            self.order.remove_from_head()
+            self.size -= 1
+
+        self.order.add_to_tail((key, value))
+        self.dict_storage[key] = self.order.tail
+        self.size += 1
