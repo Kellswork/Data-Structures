@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('../queue_and_stack')
 from dll_queue import Queue
 from dll_stack import Stack
@@ -13,13 +14,27 @@ class BinarySearchTree:
     # Insert the given value into the tree
     def insert(self, value):
         # return value if self.value == value
-        if self.value == value:
-            return
-        if value > self.value:
+        # if value == self.value:
+        #     return
+        if value < self.value:
+            # checks if the left has a child
+            if self.left is None:
+                # if it have a value doesn't we assign it value and return
+                self.left = BinarySearchTree(value)
 
-         # if the value is greater than the root value assign it to right
-        # if value is less than the lower value, assign it to the left
-        # it's recursive so you would have to call the function on the left and right
+            else:
+                # if it does, we change the root to the current value
+                self.left.insert(value)
+
+        elif value >= self.value:
+            # checks if the left has a child
+            if self.right is None:
+                # if it doesn't we assign it value and return
+                self.right = BinarySearchTree(value)
+
+            else:
+                # if it does, we change the root to the current value
+                self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
